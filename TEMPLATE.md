@@ -144,13 +144,13 @@ Vertical only. Latency per question scales with CPU (threads follow the quota up
 
 ## Resource estimate
 
-Railway prices: RAM $10/GB-month, vCPU $20/vCPU-month, volume $0.15/GB-month. Estimates, not measurements.
+Railway prices: RAM $10/GB-month, vCPU $20/vCPU-month, volume $0.15/GB-month. Measured in the 2026-11-07 deploy test: 5.0 GB RAM after the first English and Turkish requests (both checkpoints resident), CPU ≈ 0.2 vCPU while answering; six requests incl. health took 3.4 s end to end. Other rows are estimates.
 
 | Profile | RAM | CPU (avg) | Volume | $/month |
 |---|---|---|---|---|
-| Idle, default (`english` + `multilingual` resident) | ~3.7 GB | ~0.01 vCPU | 1.6 GB | ≈ $38 |
-| Typical (~10k questions/day, mixed languages) | ~3.8 GB | ~0.2 vCPU | 1.6 GB | ≈ $43 |
-| Busy (~1 English question/s sustained) | ~4 GB | ~3-5 vCPU | 1.6 GB | ≈ $100-140 |
+| Idle, default (`english` + `multilingual` resident) | ~5 GB (measured) | ~0.01 vCPU | 1.6 GB | ≈ $50 |
+| Typical (~10k questions/day, mixed languages) | ~5 GB | ~0.2 vCPU | 1.6 GB | ≈ $55 |
+| Busy (~1 English question/s sustained) | ~5 GB | ~3-5 vCPU | 1.6 GB | ≈ $110-150 |
 | Lean (`LAYA_MODELS=multilingual`, clients pin `multilingual`, idle) | ~2 GB | ~0.01 vCPU | 0.7 GB | ≈ $20 |
 
 CPU cost per question from upstream's 4-core benchmark: ~0.6 s × 4 cores on `english`, ~0.2 s × 4 on `multilingual`. Expected latency on Railway: roughly 0.3-0.8 s per question on `english` and 0.1-0.3 s on `multilingual`, depending on the CPU share the service gets (unverified). Minimum plan: **Hobby** (Trial's 1 GB per service cannot hold one checkpoint; the default volume use of ~1.6 GB, ~2.5 GB with `typed-decisions`, fits Hobby's 5 GB volume).

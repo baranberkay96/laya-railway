@@ -19,7 +19,7 @@ Laya ships `laya-serve`, an HTTP server that speaks the request and answer forma
 
 - A Railway volume at `/data` for the model cache (included, about 1.5 GB with the default checkpoints)
 - Outbound access to Hugging Face on first boot to download the checkpoints
-- About 4 GB of RAM for the default two checkpoints, so a Hobby or Pro plan (Trial's 1 GB is too small)
+- About 5 GB of RAM for the default two checkpoints (measured on Railway after the first requests), so a Hobby or Pro plan (Trial's 1 GB is too small)
 
 ### Deployment Dependencies
 
