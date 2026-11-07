@@ -1,0 +1,117 @@
+{
+  "name": "Laya v0.4 Decision Engine API (Jev-Compatible)",
+  "description": "Self-hosted Laya API: typed choice, score and yes/no decisions on CPU.",
+  "category": "AI/ML",
+  "tags": [
+    "laya",
+    "decision-engine",
+    "classification",
+    "routing",
+    "guardrails",
+    "jev",
+    "cpu-inference",
+    "pytorch",
+    "huggingface",
+    "api"
+  ],
+  "image": "https://cdn.jsdelivr.net/gh/NandhaKishorM/laya@v0.4.28/assets/logo-mark.svg",
+  "upstream": {
+    "repo": "NandhaKishorM/laya",
+    "version": "0.4.28 (tag v0.4.28 -> commit 634f80d96b86cda3ddd4222426e0ee45735f357b, released 2026-11-07)",
+    "package": "laya 0.4.28 from PyPI, wheel sha256 ad54941b65da960e6893f72e2d96d894bf03a9d33e1305dbfb97b57d54d0b3e6 (same digest as the GitHub release asset)",
+    "torch": "2.14.0+cpu from https://download.pytorch.org/whl/cpu (cp311 manylinux_2_28 x86_64, sha256 673dbf5c9bbadfffab7a386b6dd7a0c219f1408a328b7b4e86d0ae551cdafa42)",
+    "base": "python:3.11.18-slim-trixie@sha256:65bd3d9f1d7fa268dd1909973ba7eb4bdf41f6dcf2cfbe76ba9528b170f3fd79",
+    "checkpoints": "convaiinnovations/laya at reviewed revision 55cf4c4ebb4ebe31b2550e8bdf3bd21b99753851 (laya.revisions.PINNED_REVISIONS)",
+    "checked": "2026-11-07"
+  },
+  "services": {
+    "Laya": {
+      "icon": "https://cdn.jsdelivr.net/gh/NandhaKishorM/laya@v0.4.28/assets/logo-mark.svg",
+      "source": {
+        "repo": "baranberkay96/laya-railway",
+        "rootDirectory": "/services/laya"
+      },
+      "startCommand": null,
+      "preDeployCommand": null,
+      "healthcheckPath": "/health",
+      "healthcheckTimeout": 900,
+      "restartPolicyType": "ALWAYS",
+      "numReplicas": 1,
+      "cronSchedule": null,
+      "publicDomain": true,
+      "targetPort": 8080,
+      "tcpProxy": null,
+      "volume": {
+        "mountPath": "/data"
+      },
+      "variables": {
+        "LAYA_API_KEY": {
+          "defaultValue": "${{secret(48, \"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\")}}",
+          "description": "Bearer key for every API call (Authorization: Bearer {key}). Generated at deploy; the server will not start without one of 24+ characters.",
+          "required": false
+        },
+        "PORT": {
+          "defaultValue": "8080",
+          "description": "Port laya-serve listens on (all IPv4 and IPv6 addresses). The healthcheck and the public domain use it; leave as is.",
+          "required": false
+        },
+        "LAYA_MODELS": {
+          "defaultValue": "english,multilingual",
+          "description": "Checkpoints loaded at startup: english, multilingual, typed-decisions. Default: the two automatic routing picks between (about 3.7 GB RAM).",
+          "required": false
+        },
+        "LAYA_DEFAULT_MODEL": {
+          "defaultValue": "",
+          "description": "Checkpoint for text whose language can't be detected. Empty = multilingual (upstream default); set english for mostly-English traffic.",
+          "required": false
+        },
+        "LAYA_MAX_LOADED": {
+          "defaultValue": "",
+          "description": "Checkpoints kept in memory at once (empty = upstream default 2). 1 caps RAM but reloads a checkpoint on every switch.",
+          "required": false
+        },
+        "LAYA_REVISION": {
+          "defaultValue": "reviewed",
+          "description": "Hugging Face revision for checkpoint downloads. 'reviewed' = the commit laya 0.4.28 pins. Clear it to follow the Hub's latest.",
+          "required": false
+        },
+        "TEMPLATE_VERIFY_DIGESTS": {
+          "defaultValue": "true",
+          "description": "Check each checkpoint's files against SHA-256 digests recorded for the reviewed revision before loading (only with LAYA_REVISION=reviewed).",
+          "required": false
+        },
+        "TEMPLATE_VEGA_LANE": {
+          "defaultValue": "off",
+          "description": "off: states past ~8k tokens stay on the encoders and are truncated. auto: laya's vega lane reads them with a 0.8B reader (+2-4 GB RAM, slow on CPU).",
+          "required": false
+        },
+        "LAYA_THREADS": {
+          "defaultValue": "",
+          "description": "Torch CPU threads. Empty = the service's CPU quota, at most 8 (more threads than CPU time stalls inference).",
+          "required": false
+        },
+        "LAYA_JEV_STRICT": {
+          "defaultValue": "0",
+          "description": "1 = strict Jev wire format (no routing, action or extra confidence fields) for clients that reject unknown fields.",
+          "required": false
+        },
+        "LAYA_LOG_LEVEL": {
+          "defaultValue": "info",
+          "description": "Server log level: critical, error, warning, info, debug or trace.",
+          "required": false
+        },
+        "HF_TOKEN": {
+          "defaultValue": "",
+          "description": "Optional Hugging Face token. The checkpoints are public; a token only helps against Hub download rate limits.",
+          "required": false
+        },
+        "RAILWAY_DEPLOYMENT_DRAINING_SECONDS": {
+          "defaultValue": "20",
+          "description": "Seconds a stopping deployment gets to finish in-flight requests on redeploy.",
+          "required": false
+        }
+      }
+    }
+  },
+  "buckets": []
+}

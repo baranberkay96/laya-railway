@@ -1,0 +1,31 @@
+# Lock input for ../requirements-torch.txt and ../requirements.txt. Not installed itself.
+#
+# Regenerate after changing a version here (run from this directory, any OS):
+#   uv lock --python 3.11
+#   uv export --frozen --no-dev --no-emit-project --format requirements-txt --python 3.11 -o /tmp/laya-req.txt
+#   python3 split_requirements.py /tmp/laya-req.txt ../requirements-torch.txt ../requirements.txt
+# The torch pin goes to requirements-torch.txt (PyTorch CPU index), everything else to
+# requirements.txt (PyPI). TEMPLATE.md ("Upgrading") has the full checklist.
+#
+# exclude-newer is the moment laya 0.4.28 was published to PyPI (2026-11-07 14:58 UTC), so the
+# lock holds the dependency versions laya's own release CI installed, not later ones.
+[project]
+name = "laya-railway-lock"
+version = "0"
+requires-python = "==3.11.*"
+dependencies = [
+    "laya[serve]==0.4.28",
+    "torch==2.14.0",
+]
+
+[tool.uv]
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+exclude-newer = "2026-11-07T15:00:00Z"
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
