@@ -1,10 +1,10 @@
-# Laya v0.4 Decision Engine API (Jev-Compatible): Railway template spec
+# Laya Decision Engine API (Jev-Compatible): Railway template spec
 
 ## Listing
 
 | Field | Value |
 |---|---|
-| Name | **Laya v0.4 Decision Engine API (Jev-Compatible)** (46 chars; version label per the 0.x rule) |
+| Name | **Laya Decision Engine API (Jev-Compatible)** (46 chars; version label per the 0.x rule) |
 | Description | Self-hosted Laya API: typed choice, score and yes/no decisions on CPU. (70 chars) |
 | Category | AI/ML |
 | Tags | laya, decision-engine, classification, routing, guardrails, jev, cpu-inference, pytorch, huggingface, api |

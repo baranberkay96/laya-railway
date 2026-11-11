@@ -1,4 +1,4 @@
-# NOTICE: Laya v0.4 Decision Engine API template
+# NOTICE: Laya Decision Engine API template
 
 This is a community template. It is not affiliated with or endorsed by the Laya authors (Convai Innovations, NandhaKishorM/laya), TypeSafe (Jev) or Railway. "Laya" and its logo belong to their owners and are used only to name the software this template deploys.
 

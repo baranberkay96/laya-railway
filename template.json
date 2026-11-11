@@ -1,5 +1,6 @@
 {
-  "name": "Laya v0.4 Decision Engine API (Jev-Compatible)",
+  "name": "Laya Decision Engine API (Jev-Compatible)",
+  "idSeed": "Laya v0.4 Decision Engine API (Jev-Compatible)",
   "description": "Self-hosted Laya API: typed choice, score and yes/no decisions on CPU.",
   "category": "AI/ML",
   "tags": [
